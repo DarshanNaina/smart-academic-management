@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-panel glass mb-4" data-aos="fade-up">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <span class="badge bg-light text-dark mb-3">Premium Academic Suite</span>
+      <h1 class="display-5 fw-bold">Modern Smart Academic Management Platform</h1>
+      <p class="mt-3 text-light-emphasis">
+        Manage attendance, marks, assignments, analytics, and communication through one beautiful, responsive dashboard.
+      </p>
+      <div class="d-flex flex-wrap gap-2 mt-4">
+        <a class="btn btn-light text-dark" href="{{ url_for('auth.login') }}">Get Started</a>
+        <a class="btn btn-soft" href="#video-intro">Watch Intro</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <img class="img-fluid hero-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop" alt="Education dashboard">
+    </div>
+  </div>
+</section>
+
+<section class="row g-3 mb-4">
+  <div class="col-md-4" data-aos="fade-up">
+    <div class="card p-4 h-100"><h5>Role-Based Access</h5><p class="mb-0 text-muted">Separate secure spaces for Admin, Teacher, and Student.</p></div>
+  </div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="80">
+    <div class="card p-4 h-100"><h5>Live Analytics</h5><p class="mb-0 text-muted">Visual insights for attendance, marks, and class performance.</p></div>
+  </div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="130">
+    <div class="card p-4 h-100"><h5>Paperless Workflow</h5><p class="mb-0 text-muted">Upload notes, assignments, and student submissions online.</p></div>
+  </div>
+</section>
+
+<section id="video-intro" class="card p-3 p-md-4" data-aos="zoom-in">
+  <h5 class="mb-3">Quick Product Intro</h5>
+  <div class="ratio ratio-16x9 rounded-4 overflow-hidden">
+    <iframe src="https://www.youtube.com/embed/6Af6b_wyiwI" title="SAMS Intro" allowfullscreen></iframe>
+  </div>
+</section>
+{% endblock %}

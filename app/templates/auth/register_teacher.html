@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center" data-aos="fade-up">
+  <div class="col-md-8">
+    <div class="card p-3 p-md-4">
+      <div class="card-body">
+        <h4 class="mb-1">Teacher Registration</h4>
+        <p class="text-muted mb-4">Register as a faculty member to manage classes.</p>
+        <form method="post" class="row g-3">
+          {{ form.hidden_tag() }}
+          <div class="col-md-6 form-floating">{{ form.full_name(class="form-control", placeholder="Full Name") }}<label>Full Name</label></div>
+          <div class="col-md-6 form-floating">{{ form.email(class="form-control", placeholder="Email") }}<label>Email</label></div>
+          <div class="col-md-6 form-floating">{{ form.password(class="form-control", placeholder="Password") }}<label>Password</label></div>
+          <div class="col-md-6 form-floating">{{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}<label>Confirm Password</label></div>
+          <div class="col-md-6 form-floating">{{ form.employee_code(class="form-control", placeholder="Employee Code") }}<label>Employee Code</label></div>
+          <div class="col-md-6 form-floating">{{ form.qualification(class="form-control", placeholder="Qualification") }}<label>Qualification</label></div>
+          <div class="col-md-4">{{ form.submit(class="btn btn-info") }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

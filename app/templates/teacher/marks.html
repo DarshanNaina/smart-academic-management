@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Marks Management</h3>
+<div class="card p-3 mb-3" data-aos="fade-up">
+<form method="post" class="row g-2">
+  {{ form.hidden_tag() }}
+  <div class="col-md-3">{{ form.student_id(class="form-select") }}</div>
+  <div class="col-md-3">{{ form.assignment_id(class="form-select") }}</div>
+  <div class="col-md-2">{{ form.internal(class="form-control", placeholder="Internal") }}</div>
+  <div class="col-md-2">{{ form.external(class="form-control", placeholder="External") }}</div>
+  <div class="col-md-2">{{ form.submit(class="btn btn-success") }}</div>
+</form>
+</div>
+<div class="card p-3" data-aos="fade-up">
+<table class="table table-hover mb-0">
+  <thead><tr><th>Student</th><th>Subject</th><th>Total</th><th>Grade</th><th>Email</th></tr></thead>
+  <tbody>
+  {% for m in marks_list %}
+    <tr>
+      <td>{{ m.student.user.full_name }}</td>
+      <td>{{ m.subject.name }}</td>
+      <td>{{ m.total_marks }}</td>
+      <td>{{ m.grade }}</td>
+      <td>
+        <form method="post" action="{{ url_for('teacher.send_result_email', student_id=m.student.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-sm btn-outline-primary">Send</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

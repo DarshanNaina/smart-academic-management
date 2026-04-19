@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-5 bg-light rounded-3 shadow-sm">
+  <h1>Smart Academic Management System</h1>
+  <p class="lead">Production-ready Flask + MySQL system for Admin, Teacher, and Student roles.</p>
+  <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Get Started</a>
+</div>
+{% endblock %}

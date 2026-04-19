@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Student Management</h3>
+
+<div class="card p-3 mb-3" data-aos="fade-up">
+  <form method="post" class="row g-2">
+    {{ form.hidden_tag() }}
+    <div class="col-md-3">{{ form.full_name(class="form-control", placeholder="Full Name") }}</div>
+    <div class="col-md-3">{{ form.email(class="form-control", placeholder="Email") }}</div>
+    <div class="col-md-2">{{ form.password(class="form-control", placeholder="Password") }}</div>
+    <div class="col-md-2">{{ form.admission_no(class="form-control", placeholder="Admission No") }}</div>
+    <div class="col-md-2">{{ form.roll_no(class="form-control", placeholder="Roll No") }}</div>
+    <div class="col-md-4">{{ form.class_id(class="form-select") }}</div>
+    <div class="col-md-4">{{ form.guardian_name(class="form-control", placeholder="Guardian Name") }}</div>
+    <div class="col-md-2">{{ form.submit(class="btn btn-success") }}</div>
+  </form>
+</div>
+
+<div class="card p-3 mb-3" data-aos="fade-up">
+  <form method="get" class="row g-2">
+    <div class="col-md-10"><input type="text" class="form-control" name="q" value="{{ search }}" placeholder="Search by name, email, admission no"></div>
+    <div class="col-md-2"><button class="btn btn-outline-primary w-100">Search</button></div>
+  </form>
+</div>
+
+<div class="card p-3" data-aos="fade-up">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr><th>Name</th><th>Email</th><th>Admission</th><th>Class</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>{{ s.user.full_name }}</td>
+        <td>{{ s.user.email }}</td>
+        <td>{{ s.admission_no }}</td>
+        <td>{{ s.classroom.name }}-{{ s.classroom.section }}</td>
+        <td>
+          <form method="post" action="{{ url_for('admin.delete_user', user_id=s.user.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-center text-muted">No students found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Student Dashboard</h3>
+<div class="row g-3 mb-3">
+  <div class="col-md-4" data-aos="fade-up"><div class="card p-3"><small class="text-muted">Student</small><h5>{{ student.user.full_name }}</h5></div></div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="70"><div class="card p-3"><small class="text-muted">Attendance</small><h4>{{ attendance_per }}%</h4></div></div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="130"><div class="card p-3"><small class="text-muted">Predicted Performance</small><h4>{{ predicted_performance }}%</h4></div></div>
+</div>
+<a class="btn btn-success btn-sm mb-3" href="{{ url_for('student.upload_assignment') }}"><i class="bi bi-cloud-upload"></i> Upload Assignment Submission</a>
+<div class="row g-3">
+  <div class="col-md-6" data-aos="fade-up">
+    <div class="card p-3">
+      <h5>Performance Overview</h5>
+      <canvas id="marksChart"></canvas>
+    </div>
+  </div>
+  <div class="col-md-6" data-aos="fade-up" data-aos-delay="70">
+    <div class="card p-3">
+      <h5>Assignments</h5>
+      <ul class="list-group">
+        {% for a in assignments %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ a.title }}</span>
+          <a href="{{ url_for('teacher.files', filename=a.file_path) }}" class="btn btn-sm btn-primary">Download</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card p-3 mt-3" data-aos="fade-up">
+<h5 class="mt-1">My Submissions</h5>
+<ul class="list-group mb-0">
+{% for s in submissions %}
+<li class="list-group-item d-flex justify-content-between">
+  <span>{{ s.title }}</span>
+  <a href="{{ url_for('teacher.files', filename=s.file_path) }}" class="btn btn-sm btn-outline-primary">View File</a>
+</li>
+{% else %}
+<li class="list-group-item">No submissions uploaded yet.</li>
+{% endfor %}
+</ul>
+</div>
+<div class="card p-3 mt-3" data-aos="fade-up">
+<h5 class="mt-1">Marks</h5>
+<table class="table mb-0">
+  <thead><tr><th>Subject</th><th>Total</th><th>Percentage</th><th>Grade</th></tr></thead>
+  <tbody>
+  {% for m in marks %}
+    <tr><td>{{ m.subject.name }}</td><td>{{ m.total_marks }}</td><td>{{ m.percentage }}</td><td>{{ m.grade }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<script>
+  new Chart(document.getElementById("marksChart"), {
+    type: "bar",
+    data: {
+      labels: {{ chart_labels | tojson }},
+      datasets: [{ label: "Subject-wise %", data: {{ chart_values | tojson }}, borderWidth: 1 }]
+    }
+  });
+</script>
+{% endblock %}

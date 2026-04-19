@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Academic Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="appLoader" class="app-loader">
+    <div class="spinner-border text-light" role="status"></div>
+  </div>
+
+  <div class="dashboard-shell {{ 'dashboard-shell--public' if not current_user.is_authenticated else '' }}">
+    {% if current_user.is_authenticated %}
+    <aside class="app-sidebar glass" id="appSidebar">
+      <a class="brand text-decoration-none" href="{{ url_for('main.index') }}">
+        <i class="bi bi-mortarboard-fill"></i> SAMS
+      </a>
+      <nav class="sidebar-nav">
+        {% if current_user.role == "admin" %}
+          <a href="{{ url_for('admin.dashboard') }}"><i class="bi bi-grid-fill"></i> Dashboard</a>
+          <a href="{{ url_for('admin.manage_students') }}"><i class="bi bi-person-lines-fill"></i> Students</a>
+          <a href="{{ url_for('admin.manage_teachers') }}"><i class="bi bi-person-workspace"></i> Teachers</a>
+          <a href="{{ url_for('admin.broadcast_notification') }}"><i class="bi bi-megaphone-fill"></i> Broadcast</a>
+          <a href="{{ url_for('admin.classes') }}"><i class="bi bi-building"></i> Classes</a>
+          <a href="{{ url_for('admin.subjects') }}"><i class="bi bi-journal-bookmark-fill"></i> Subjects</a>
+          <a href="{{ url_for('admin.assign_teacher') }}"><i class="bi bi-diagram-3-fill"></i> Assign</a>
+        {% elif current_user.role == "teacher" %}
+          <a href="{{ url_for('teacher.dashboard') }}"><i class="bi bi-grid-fill"></i> Dashboard</a>
+          <a href="{{ url_for('teacher.marks') }}"><i class="bi bi-clipboard-data-fill"></i> Marks</a>
+          <a href="{{ url_for('teacher.attendance') }}"><i class="bi bi-calendar2-check-fill"></i> Attendance</a>
+          <a href="{{ url_for('teacher.upload_assignment') }}"><i class="bi bi-cloud-upload-fill"></i> Assignments</a>
+        {% else %}
+          <a href="{{ url_for('student.dashboard') }}"><i class="bi bi-grid-fill"></i> Dashboard</a>
+          <a href="{{ url_for('student.profile') }}"><i class="bi bi-person-circle"></i> Profile</a>
+          <a href="{{ url_for('student.monthly_report') }}"><i class="bi bi-bar-chart-line-fill"></i> Attendance Report</a>
+          <a href="{{ url_for('student.upload_assignment') }}"><i class="bi bi-upload"></i> Upload Work</a>
+        {% endif %}
+      </nav>
+    </aside>
+    {% endif %}
+
+    <main class="app-main {{ 'app-main--public container py-4 py-md-5' if not current_user.is_authenticated else '' }}">
+      <header class="topbar glass d-flex justify-content-between align-items-center">
+        {% if current_user.is_authenticated %}
+          <button class="btn btn-outline-light d-lg-none" id="sidebarToggle"><i class="bi bi-list"></i></button>
+          <h6 class="mb-0 text-white fw-semibold text-capitalize">{{ current_user.role }} Panel</h6>
+          <div class="d-flex gap-2 align-items-center">
+            <a class="btn btn-sm btn-soft" href="{{ url_for('main.notifications') }}">
+              <i class="bi bi-bell-fill"></i>
+            </a>
+            <span class="text-light small d-none d-md-inline">{{ current_user.full_name }}</span>
+            <a class="btn btn-sm btn-warning" href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i></a>
+          </div>
+        {% else %}
+          <a class="text-white text-decoration-none fw-bold" href="{{ url_for('main.index') }}">SAMS</a>
+          <div class="d-flex gap-2">
+            <a class="btn btn-sm btn-soft" href="{{ url_for('auth.login') }}">Login</a>
+          </div>
+        {% endif %}
+      </header>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        <div class="{{ 'px-1 pb-2' if current_user.is_authenticated else 'pb-2' }}">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} {{ 'glass border-0' if current_user.is_authenticated else 'border-0 shadow-sm' }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endwith %}
+
+      <section class="{{ 'content-wrap' if current_user.is_authenticated else '' }}">
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

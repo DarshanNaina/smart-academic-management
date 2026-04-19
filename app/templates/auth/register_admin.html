@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center" data-aos="fade-up">
+  <div class="col-md-7">
+    <div class="card p-3 p-md-4">
+      <div class="card-body">
+        <h4 class="mb-1">Admin Registration</h4>
+        <p class="text-muted mb-4">Register administrator account for system control.</p>
+        <form method="post" class="row g-3">
+          {{ form.hidden_tag() }}
+          <div class="col-md-6 form-floating">{{ form.full_name(class="form-control", placeholder="Full Name") }}<label>Full Name</label></div>
+          <div class="col-md-6 form-floating">{{ form.email(class="form-control", placeholder="Email") }}<label>Email</label></div>
+          <div class="col-md-6 form-floating">{{ form.password(class="form-control", placeholder="Password") }}<label>Password</label></div>
+          <div class="col-md-6 form-floating">{{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}<label>Confirm Password</label></div>
+          <div class="col-md-4">{{ form.submit(class="btn btn-dark") }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

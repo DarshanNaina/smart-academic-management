@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Teacher Management</h3>
+
+<div class="card p-3 mb-3" data-aos="fade-up">
+  <form method="post" class="row g-2">
+    {{ form.hidden_tag() }}
+    <div class="col-md-3">{{ form.full_name(class="form-control", placeholder="Full Name") }}</div>
+    <div class="col-md-3">{{ form.email(class="form-control", placeholder="Email") }}</div>
+    <div class="col-md-2">{{ form.password(class="form-control", placeholder="Password") }}</div>
+    <div class="col-md-2">{{ form.employee_code(class="form-control", placeholder="Employee Code") }}</div>
+    <div class="col-md-2">{{ form.qualification(class="form-control", placeholder="Qualification") }}</div>
+    <div class="col-md-2">{{ form.submit(class="btn btn-success") }}</div>
+  </form>
+</div>
+
+<div class="card p-3 mb-3" data-aos="fade-up">
+  <form method="get" class="row g-2">
+    <div class="col-md-10"><input type="text" class="form-control" name="q" value="{{ search }}" placeholder="Search by name, email, employee code"></div>
+    <div class="col-md-2"><button class="btn btn-outline-primary w-100">Search</button></div>
+  </form>
+</div>
+
+<div class="card p-3" data-aos="fade-up">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr><th>Name</th><th>Email</th><th>Employee Code</th><th>Qualification</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      {% for t in teachers %}
+      <tr>
+        <td>{{ t.user.full_name }}</td>
+        <td>{{ t.user.email }}</td>
+        <td>{{ t.employee_code }}</td>
+        <td>{{ t.qualification or "N/A" }}</td>
+        <td>
+          <form method="post" action="{{ url_for('admin.delete_user', user_id=t.user.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-center text-muted">No teachers found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

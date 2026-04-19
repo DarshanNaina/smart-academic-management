@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Subjects</h3>
+<div class="card p-3 mb-3" data-aos="fade-up">
+<form method="post" class="row g-2">
+  {{ form.hidden_tag() }}
+  <div class="col-md-5">{{ form.name(class="form-control", placeholder="Subject") }}</div>
+  <div class="col-md-3">{{ form.code(class="form-control", placeholder="Code") }}</div>
+  <div class="col-md-4">{{ form.submit(class="btn btn-success") }}</div>
+</form>
+</div>
+<div class="card p-3" data-aos="fade-up">
+<ul class="list-group">
+  {% for s in subjects %}
+  <li class="list-group-item">{{ s.name }} ({{ s.code }})</li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}

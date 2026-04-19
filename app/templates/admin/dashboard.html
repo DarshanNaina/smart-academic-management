@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-right">
+  <h3 class="text-white mb-0">Admin Dashboard</h3>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-md-3" data-aos="fade-up"><div class="card p-3"><small class="text-muted">Students</small><h4>{{ students }}</h4></div></div>
+  <div class="col-md-3" data-aos="fade-up" data-aos-delay="60"><div class="card p-3"><small class="text-muted">Teachers</small><h4>{{ teachers }}</h4></div></div>
+  <div class="col-md-3" data-aos="fade-up" data-aos-delay="120"><div class="card p-3"><small class="text-muted">Pass</small><h4>{{ pass_count }}</h4></div></div>
+  <div class="col-md-3" data-aos="fade-up" data-aos-delay="180"><div class="card p-3"><small class="text-muted">Fail</small><h4>{{ fail_count }}</h4></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-7" data-aos="fade-up">
+    <div class="card p-3">
+      <h5>Top Students</h5>
+      <ul class="list-group">
+      {% for student, avg in top_students %}
+      <li class="list-group-item d-flex justify-content-between"><span>{{ student.user.full_name }}</span><strong>{{ avg|round(2) }}%</strong></li>
+      {% else %}
+      <li class="list-group-item">No results available.</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-5" data-aos="fade-up" data-aos-delay="70">
+    <div class="card p-3 h-100">
+      <h5>Attendance Ratio</h5>
+      <h2 class="text-primary">{{ attendance_ratio }}%</h2>
+      <div class="d-grid gap-2 mt-3">
+        <a class="btn btn-primary" href="{{ url_for('admin.manage_students') }}">Manage Students</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('admin.manage_teachers') }}">Manage Teachers</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('admin.broadcast_notification') }}">Broadcast Alert</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('admin.classes') }}">Manage Classes</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('admin.subjects') }}">Manage Subjects</a>
+        <a class="btn btn-outline-primary" href="{{ url_for('admin.assign_teacher') }}">Assign Teacher</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

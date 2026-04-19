@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Teacher Dashboard</h3>
+<div class="row g-3 mb-3">
+  <div class="col-md-4" data-aos="fade-up"><div class="card p-3"><small class="text-muted">Assigned Subjects</small><h4>{{ assigned|length }}</h4></div></div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="80"><div class="card p-3"><small class="text-muted">Marks Entered</small><h4>{{ marks_count }}</h4></div></div>
+  <div class="col-md-4" data-aos="fade-up" data-aos-delay="140"><div class="card p-3"><small class="text-muted">Uploaded Files</small><h4>{{ assignments_count }}</h4></div></div>
+</div>
+<div class="card p-3" data-aos="fade-up">
+  <h5>Quick Actions</h5>
+  <div class="d-flex flex-wrap gap-2">
+    <a class="btn btn-primary" href="{{ url_for('teacher.marks') }}">Manage Marks</a>
+    <a class="btn btn-outline-primary" href="{{ url_for('teacher.attendance') }}">Manage Attendance</a>
+    <a class="btn btn-outline-primary" href="{{ url_for('teacher.upload_assignment') }}">Upload Assignments</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-black mb-3" data-aos="fade-right">Upload Assignment Submission</h3>
+<div class="card p-3 mb-3" data-aos="fade-up">
+<form method="post" enctype="multipart/form-data" class="row g-2 mb-0">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-md-4">
+    <select name="assignment_id" class="form-select">
+      {% for a in assignments %}
+      <option value="{{ a.id }}">{{ a.subject.name }} - {{ a.title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3"><input name="title" class="form-control" placeholder="Submission title"></div>
+  <div class="col-md-3"><input name="file" type="file" class="form-control"></div>
+  <div class="col-md-2"><button class="btn btn-success w-100">Upload</button></div>
+</form>
+</div>
+
+<div class="card p-3" data-aos="fade-up">
+<h5>My Uploaded Submissions</h5>
+<ul class="list-group">
+  {% for s in submissions %}
+  <li class="list-group-item d-flex justify-content-between">
+    <span>{{ s.title }} ({{ s.assignment.subject.name }})</span>
+    <a href="{{ url_for('teacher.files', filename=s.file_path) }}" class="btn btn-sm btn-primary">Download</a>
+  </li>
+  {% else %}
+  <li class="list-group-item">No submissions yet.</li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}

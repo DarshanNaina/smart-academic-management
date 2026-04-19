@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Notifications</h3>
+<div class="card p-3" data-aos="fade-up">
+<ul class="list-group">
+  {% for n in notices %}
+  <li class="list-group-item">
+    <strong>{{ n.title }}</strong>
+    <p class="mb-0">{{ n.message }}</p>
+  </li>
+  {% else %}
+  <li class="list-group-item">No notifications yet.</li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}

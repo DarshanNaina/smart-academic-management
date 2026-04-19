@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-white mb-3" data-aos="fade-right">Attendance Management</h3>
+<div class="card p-3" data-aos="fade-up">
+<form method="post" class="row g-2">
+  {{ form.hidden_tag() }}
+  <div class="col-md-3">{{ form.student_id(class="form-select") }}</div>
+  <div class="col-md-3">{{ form.assignment_id(class="form-select") }}</div>
+  <div class="col-md-2">{{ form.day(class="form-control") }}</div>
+  <div class="col-md-2">{{ form.status(class="form-select") }}</div>
+  <div class="col-md-2">{{ form.submit(class="btn btn-success") }}</div>
+</form>
+</div>
+{% endblock %}
